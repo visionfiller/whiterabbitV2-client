@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { MapContainer, TileLayer } from 'react-leaflet'
 import { useNavigate, useParams } from "react-router-dom"
-import { Favorite, getCustomer, getFavorites, getVarietalRegionsById, unFavorite } from "../cellar/CellarProvider"
-import { addToFavorites, Geocoding } from "./LibraryProvider"
+import { Favorite, getCustomer, getFavorites, unFavorite } from "../cellar/CellarProvider"
+import { addToFavorites, Geocoding, getVarietalRegionsById } from "./LibraryProvider"
 
 export const CardDetails = ({ wineDetails, HandleCardClose }) => {
     const [favorites, setFavorites] = useState([])
@@ -19,10 +19,7 @@ export const CardDetails = ({ wineDetails, HandleCardClose }) => {
     const [customer,setCustomer] = useState({})
 
     useEffect(() => {
-            getVarietalRegionsById(wineDetails.id)
-                .then((detail) => {
-                    setWine(detail)
-                })
+            handleWineDetail()
             
             // getFavorites(rabbitUserObject.id)
             //     .then((data) => {
@@ -31,7 +28,11 @@ export const CardDetails = ({ wineDetails, HandleCardClose }) => {
         }, []
     )
 
-
+ const handleWineDetail = () => {
+    getVarietalRegionsById(wineDetails.id)
+                .then((detail) => {
+                    setWine(detail)
+})}
     // useEffect(() => {
     //         if (wine.regionId) {
     //             Geocoding(wine?.region?.geoCodeCity).then((geoCode) => {
@@ -60,11 +61,11 @@ export const CardDetails = ({ wineDetails, HandleCardClose }) => {
     //     </>)
     
     const IsFavorite = (wine) => {
-        if (wine.is_favorite){
-            return <button onClick={unFavorite()}>Unfavorite</button>
+        if (!wine.is_favorite){
+            return <button className="btn" onClick={()=> Favorite(wine.id).then(()=> handleWineDetail())}>Favorite</button>
         }
         else{
-            return <button onClick={Favorite()}>Favorite</button>
+            return <button className="btn" onClick={()=>  unFavorite(wine.id).then(()=> handleWineDetail())}>unFavorite</button>
         }
         
     }

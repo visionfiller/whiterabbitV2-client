@@ -4,7 +4,7 @@ import { UploadWidget } from "../cloudinary/UploadWidget"
 import { createUser, getUserByEmailId } from "./UserProvider"
 
 export const Register = (setToken) => {
-    const [user, setUser] = useState({ isStaff: false })
+    const [user, setUser] = useState({ is_staff: false })
     const [url, setURL] = useState("")
     const [error, updateError] = useState("")
     let navigate = useNavigate()
@@ -18,7 +18,7 @@ export const Register = (setToken) => {
             last_name: user.last_name,
             password: user.password,
             profile_picture: url,
-            isStaff: user.isStaff
+            is_staff: user.is_staff
         }).then(res => {
             if ("valid" in res && res.valid) {
               setToken(res.auth_token, res.user_id, res.is_staff)
@@ -129,10 +129,10 @@ export const Register = (setToken) => {
                                     <label className="flex row gap-4 text-white">
                                         <input onChange={(evt) => {
                                             const copy = { ...user }
-                                            copy.isStaff = evt.target.checked
+                                            copy.is_staff = evt.target.checked
                                             setUser(copy)
                                         }}
-                                            type="checkbox" id="isStaff" className="" />
+                                            type="checkbox" id="is_staff" className="" />
                                         <span className="" htmlFor="email"> I work here </span>
                                     </label>
                                 </fieldset>

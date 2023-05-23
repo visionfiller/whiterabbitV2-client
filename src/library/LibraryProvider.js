@@ -20,6 +20,16 @@ export const getVarietalRegionsById = (id) => {
     })
         .then(response => response.json())
 }
+export const getVarietalRegionsByWineType = (wineTypeId) => {
+    let token = getToken()
+    return fetch(`http://localhost:8000/varietalregions?wine_type=${wineTypeId}`, {
+        headers:{
+            "Authorization": `Token ${token}`,
+             "Content-Type": "application/json"
+        }
+    })
+        .then(response => response.json())
+}
 export const getAllFavorites = () => {
     return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/favorites`)
     .then(response => response.json())
@@ -29,20 +39,16 @@ export const getVarietalRegionsToPaginate = (currentPage) => {
     .then(response => response.json())
 }
 export const getWineTypes = () => {
-    return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/wineTypes`)
-    .then(response => response.json())
-}
-
-export const addToFavorites = (wineObject) => {
-    return fetch(` https://white-rabbit-api-k3hmh.ondigitalocean.app/favorites`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(wineObject)
+    let token = getToken()
+    return fetch("http://localhost:8000/winetypes", {
+        headers:{
+            "Authorization": `Token ${token}`,
+             "Content-Type": "application/json"
+        }
     })
         .then(response => response.json())
 }
+
 
 export const updateVarietalRegion =(varietalRegionObject) => {
     return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/varietalRegions/${varietalRegionObject.id}`, {
