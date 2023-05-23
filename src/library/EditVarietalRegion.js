@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { getVarietalRegionsById } from "../cellar/CellarProvider"
+
 import { getAcidities, getBodies, getDrynesses } from "../somm/SommProvider"
-import { updateVarietalRegion } from "./LibraryProvider"
+import { getVarietalRegionsById, updateVarietalRegion } from "./LibraryProvider"
 
 export const EditVarietalRegion = () => {
     const { varietalRegionId } = useParams()

@@ -1,27 +1,30 @@
 import { useEffect, useState } from "react"
+import { getCustomer, getCustomers } from "../cellar/CellarProvider"
 import { LibraryCard } from "./LibraryCard"
-import { getAllFavorites, getRegions, getVarietalRegions, getVarietalRegionsToPaginate, getWineTypes } from "./LibraryProvider"
+import { getAllFavorites, getRegions, getVarietalRegions, getVarietalRegionsByWineType, getVarietalRegionsToPaginate, getWineTypes } from "./LibraryProvider"
 
 export const Library = () => {
     const [varietalRegions, setVarietalRegions] = useState([])
-
     const [filteredWines, setFilteredWines] = useState([])
     const [wineTypeId, setWineTypeId] = useState("")
     const [wineTypes, setWineTypes] = useState([])
-    const [sorted, setSorted] = useState("")
-    const [loading, setLoading] = useState(false);
-    const [hasMore, setHasMore] = useState(true);
-    const [curPage, setCurPage] = useState(1);
-    const [errorMsg, setErrorMsg] = useState("");
+    // const [sorted, setSorted] = useState("")
+    // const [loading, setLoading] = useState(false);
+    // const [hasMore, setHasMore] = useState(true);
+    // const [curPage, setCurPage] = useState(1);
+    // const [errorMsg, setErrorMsg] = useState("");
     const [showFavorites, setShowFavorites] = useState(false)
     const [showMyFavorites, setShowMyFavorites] = useState(false)
-    const [favorites, setFavorites] = useState([])
+    const [customers, setCustomers] = useState([])
     const localRabbitUser = localStorage.getItem("rabbit_user")
     const rabbitUserObject = JSON.parse(localRabbitUser)
 
 useEffect(()=>{
+    getWines()
+},[])
+const getWines = () => {
     getVarietalRegions().then((data)=>setVarietalRegions(data))
-})
+}
     // useEffect(() => {
     //     setLoading(true)
     //     getVarietalRegionsToPaginate(curPage)
@@ -45,26 +48,41 @@ useEffect(()=>{
                 .then((data) => {
                     setWineTypes(data)
                 })
-            // getAllFavorites()
-            //     .then((data) => {
-            //         setFavorites(data)
-                // })
+            getCustomers()
+                .then((data) => {
+                    setCustomers(data)
+                })
 
         }, []
     )
     useEffect(() => {
         let varietalRegionsFiltered = [...varietalRegions]
-        if (wineTypeId) { varietalRegionsFiltered = varietalRegionsFiltered.filter(varietal => varietal.varietal?.wineTypeId === wineTypeId) }
-        if (sorted === "body") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => b.bodyId - a.bodyId) }
-        if (sorted === "acidity") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => a.acidityId - b.acidityId) }
-        if (sorted === "dryness") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => a.drynessId - b.drynessId) }
-        if (showFavorites) { varietalRegionsFiltered = varietalRegionsFiltered.filter(varietal => favorites.find((favorite) => favorite.varietalRegionId === varietal.id)) }
-        if (showMyFavorites) { varietalRegionsFiltered = varietalRegionsFiltered.filter(varietal => favorites.find((favorite) => favorite.varietalRegionId === varietal.id && favorite.userId === rabbitUserObject.id)) }
-        setFilteredWines(varietalRegionsFiltered)
-    },
-        [varietalRegions, wineTypeId, sorted, showFavorites, showMyFavorites]
-    )
+        if (wineTypeId) { getVarietalRegionsByWineType(wineTypeId).then((data)=>setFilteredWines(data)) }
+        // if (sorted === "body") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => b.bodyId - a.bodyId) }
+        // if (sorted === "acidity") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => a.acidityId - b.acidityId) }
+        // if (sorted === "dryness") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => a.drynessId - b.drynessId) }
+       
+        else if (showFavorites && customers.length){
+            let favorites= []
+            customers.map((customer)=>{
+                 customer.favorites.map((favorite)=> favorites.push(favorite))}
+                 )
+        
+            setFilteredWines(favorites)
+            console.log("hello")
+           
+            }
+        else if (showMyFavorites) { getCustomer(rabbitUserObject.user_id).then((data) => setFilteredWines(data.favorites))
+        console.log('hello again')}
 
+        else {setFilteredWines(varietalRegionsFiltered)
+        console.log('hello 3')}
+        
+       
+    },
+        [varietalRegions, wineTypeId, showMyFavorites, showFavorites, customers.length]
+    )
+   
 
     // const loadMoreOnClick = () => {
     //     // prevent click if the state is loading
@@ -73,17 +91,17 @@ useEffect(()=>{
     // };
 
     const CreateList = () => {
-        return filteredWines.map(wine => <LibraryCard key={wine.id} wine={wine} />)
+        return filteredWines.map(wine => <LibraryCard getWines={getWines} key={wine.id} wine={wine} />)
 
     }
-    // const HandleShowFavorites = (event) => {
-    //     event.preventDefault()
-    //     setShowFavorites(event.target.checked)
-    // }
-    // const HandleShowMyFavorites = (event) => {
-    //     event.preventDefault()
-    //     setShowMyFavorites(event.target.checked)
-    // }
+    const HandleShowFavorites = (event) => {
+        event.preventDefault()
+        setShowFavorites(event.target.checked)
+    }
+    const HandleShowMyFavorites = (event) => {
+        event.preventDefault()
+        setShowMyFavorites(event.target.checked)
+    }
 
     return <>
         <h2 className="text-center p-6 text-secondary font-semibold text-4xl">The Library</h2>
@@ -98,7 +116,7 @@ useEffect(()=>{
                     })}
                 </select>
             </div>
-            <div id="sortFilters" className="m-2">
+            {/* <div id="sortFilters" className="m-2">
 
                 <select
                     className="text-black rounded-lg"
@@ -108,8 +126,8 @@ useEffect(()=>{
                     <option key="acidity" id="Acidity" value="acidity">Acidity</option>
                     <option key="dryness" id="Dryness" value="dryness">Dryness</option>
                 </select>
-            </div>
-            {/* {rabbitUserObject.staff ? ""
+            </div> */}
+            {rabbitUserObject.is_staff ? ""
             : <div className="flex row gap-5 items-center">
             <div id="favorites" className="flex row gap-2 p-1">
                 <label>Show everyone's favorites</label>
@@ -121,11 +139,12 @@ useEffect(()=>{
                 <input className="text-primary focus:ring-primary" type="checkbox" checked={showMyFavorites} onChange={(evt) => { HandleShowMyFavorites(evt) }} />
 
             </div>
-            </div>} */}
+            </div>}
         </div>
   
         <div className="flex flex-col items-center w-full pb-24 -z-10 absolute md:static md:grid md:grid-cols-5">
-            {CreateList()}
+            {filteredWines.length ? CreateList()
+            :""}
             {/* <div className="text-center   ">
             {errorMsg && <p className="error-msg">{errorMsg}</p>}
             {hasMore && (

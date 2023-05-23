@@ -37,10 +37,8 @@ export const CustomerNav = (token, setToken, is_staff) => {
 
               <div className="absolute inset-0 h-24 w-24 rounded-full bg-secondary/80 px-12 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
                 <div className="flex min-h-full rounded-full flex-col items-center justify-center">
-                  <Link className="block  text-white font-semibold text-xl" aria-current="page" onClick={() => {
-                    setToken("")
-                    navigate("/", { replace: true })
-                  }}>Logout</Link>
+                  <Link className="block  text-white font-semibold text-xl" aria-current="page" onClick={() => {localStorage.removeItem("rabbit_user")
+                navigate("/login", {replace: true})}}>Logout</Link>
                 </div>
               </div>
             </div>

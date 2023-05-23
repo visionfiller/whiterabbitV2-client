@@ -14,16 +14,11 @@ export const getCustomers = () => {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
-        }
-}
-    )}
+            }}).then(response => response.json())}
 export const getFavorites=()=>{
     return <></>
 }
-export const getVarietalRegionsById = (id) => {
-    return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/varietalRegions/${id}?_expand=dryness&_expand=body&_expand=acidity&_expand=varietal&_expand=region`)
-    .then(response => response.json())
-}
+
 
 export const unFavorite = (id) => {
     let token = getToken()
@@ -34,7 +29,7 @@ export const unFavorite = (id) => {
              "Content-Type": "application/json"
         }
     })
-        .then(response => response.json())
+       
 
        
 }
