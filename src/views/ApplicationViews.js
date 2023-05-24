@@ -10,9 +10,9 @@ import { EmployeeViews } from "./EmployeeView"
 
 
 export const ApplicationViews = ({ token, setToken }) => {
-
-    
-	if (token.is_staff) {
+	const localRabbitUser = localStorage.getItem("rabbit_user")
+    const rabbitUserObject = JSON.parse(localRabbitUser)
+	if (rabbitUserObject.is_staff) {
 		return<>
 		
 		 <EmployeeViews token={token} setToken={setToken} />

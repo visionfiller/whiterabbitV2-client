@@ -2,19 +2,19 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { getUserById } from "./NavProvider"
 import {Dropdown} from "flowbite-react"
-export const EmployeeNav = (token, setToken, is_staff) => {
+import { getCustomer } from "../cellar/CellarProvider"
+export const EmployeeNav = ({user, setToken, is_staff}) => {
     const navigate = useNavigate()
-   
     const [foundUser, setFoundUser] = useState({})
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        getUserById(token.user_id)
+        getCustomer(user.user_id)
             .then((data) => {
                 setFoundUser(data)
                 setIsLoading(false)
             })
-    }, [token]
+    }, [user]
     )
 
     return (<>
@@ -28,15 +28,14 @@ export const EmployeeNav = (token, setToken, is_staff) => {
   <div className="group h-24 w-24  [perspective:1000px]">
     <div className="relative h-full w-full rounded-full shadow transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
       <div className="absolute inset-0">
-        <img className="h-full w-full rounded-full object-cover " src={foundUser.profilePicture} alt="user photo"/>
+        <img className="h-full w-full rounded-full object-cover " src={foundUser.profile_picture} alt="user photo"/>
       </div>
 
       <div className="absolute inset-0 h-24 w-24 rounded-full bg-secondary/80 px-12 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
         <div className="flex min-h-full rounded-full flex-col items-center justify-center">
-        <Link className="block  text-white font-semibold text-xl"  aria-current="page" onClick={() => {
-               localStorage.removeItem("rabbit_user")
-               navigate("/login", {replace: true})}
-            }>Logout</Link>
+        <Link className="block  text-white font-semibold text-xl"  aria-current="page" onClick={() =>
+         {localStorage.removeItem("rabbit_user").then(()=>{navigate("/login") }) }}
+            >Logout</Link>
         </div>
       </div>
     </div>
@@ -45,9 +44,9 @@ export const EmployeeNav = (token, setToken, is_staff) => {
     </div>
                 <div className=" bg-third   items-center justify-evenly flex w-full order-1" id="mobile-menu-2">
                     <ul className="w-full flex row p-8 my-6 gap-10 rounded-lg justify-evenly">
-                        <li className="transform hover:scale-125  transition ease-out duration-300 ">
+                        {/* <li className="transform hover:scale-125  transition ease-out duration-300 ">
                             <Link to="/library" className=" block py-2  text-white font-semibold text-2xl  hover:text-primary md:p-0" aria-current="page">Library</Link>
-                        </li>
+                        </li> */}
                         <li className="transform hover:scale-125  transition ease-out duration-300 ">
                             <Link to="/somm" className=" block py-2  text-white font-semibold text-2xl  hover:text-primary md:p-0" aria-current="page">Mad Hatter
                             </Link>
@@ -69,18 +68,16 @@ export const EmployeeNav = (token, setToken, is_staff) => {
     >
    
     
-    <Dropdown.Item>
+    {/* <Dropdown.Item>
     <Link to="/library" className="block py-2 pl-3 pr-4 text-secondary rounded " aria-current="page">Library</Link>
-  </Dropdown.Item>
+  </Dropdown.Item> */}
   <Dropdown.Item>
     <Link to="/somm" className="block py-2 pl-3 pr-4 text-secondary rounded " aria-current="page">Mad Hatter</Link>
   </Dropdown.Item>
  
   <Dropdown.Item>
   <Link onClick={() => {
-                localStorage.removeItem("rabbit_user")
-                navigate("/", {replace: true})
-            }} className="block py-2 pl-3 pr-4 text-secondary rounded " >Logout</Link> 
+                 {localStorage.removeItem("rabbit_user").then(()=>{navigate("/login") }) }}} className="block py-2 pl-3 pr-4 text-secondary rounded " >Logout</Link> 
   </Dropdown.Item>
 </Dropdown>
           {/* <button data-collapse-toggle="navbar-hamburger" type="button" className="inline-flex items-center  ml-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-hamburger" aria-expanded="false">

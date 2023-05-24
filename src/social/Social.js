@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getCustomers } from "../somm/SommProvider"
+import { getCustomers } from "../cellar/CellarProvider"
+
 import { Customer } from "./Customer"
 import { getMessagesById } from "./SocialProvider"
 
@@ -14,7 +15,7 @@ export const Social = () => {
     useEffect(() => {
         getCustomers()
             .then((data) => {
-                let newData = data.filter((object) => object.id !== rabbitUserObject.id)
+                let newData = data.filter((object) => object.user !== rabbitUserObject.user_id)
                 setCustomers(newData)
             })
         getMessagesById(rabbitUserObject.id)
