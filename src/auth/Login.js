@@ -23,7 +23,7 @@ export const Login = ({setToken}) => {
           if ("valid" in res && res.valid) {
             setToken(res.auth_token, res.user_id, res.is_staff)
     
-            if (user.is_staff) {
+            if (res.is_staff) {
                 setVideo(false)
                 navigate("/somm")
             }

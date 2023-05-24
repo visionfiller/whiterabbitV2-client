@@ -26,7 +26,7 @@ export const CellarContainer = () => {
         <WineCellar rabbitUserObject={rabbitUserObject} favorites={user.favorites}/>
        
             <div className="flex flex-col md:flex md:flex-row w-full p-8">
-                {/* <Recommendations favorites={user.favorites} /> */}
+                <Recommendations user={user}  />
                 {/* <MatchedWineBottles rabbitUserObject={rabbitUserObject} /> */}
             
         </div>

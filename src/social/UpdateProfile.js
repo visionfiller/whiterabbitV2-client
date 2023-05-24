@@ -1,39 +1,57 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { getCustomer } from "../cellar/CellarProvider"
+
 import { UploadWidget } from "../cloudinary/UploadWidget"
 
 
-import { getCustomerById, updateCustomer } from "./SocialProvider"
+import {  getUser, updateCustomer, updateUser } from "./SocialProvider"
 
 
 export const UpdateProfile = () => {
-    const[user, updateUser] = useState({})
+    const[user, setUser] = useState({
+        id: 0,
+        first_name:  "",
+        last_name: "",
+        username: "",
+        email: "",
+        password: ""
+
+
+    })
+    const [customer, setCustomer] =useState(
+        {
+            user: 0,
+            full_name: "",
+            profile_picture: ""}
+    )
     const localRabbitUser = localStorage.getItem("rabbit_user")
     const rabbitUserObject = JSON.parse(localRabbitUser)
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate()
     const [url, setURL] = useState("")
     const [error, updateError] = useState("");
-    const [profilePicture, setProfilePicture] =useState(<></>)
    
     useEffect( () => {
             if(rabbitUserObject){ 
-            getCustomerById(rabbitUserObject.id)
-            .then((data) => {
-                updateUser(data)
-            })
+            getUser(rabbitUserObject.user_id).then((data) => {setUser(data)})
+            getCustomer(rabbitUserObject.user_id).then((data)=> setCustomer(data))
             setIsLoading(false)
         }
         else{setIsLoading(false)}
         },[]
     )
     
-const HandleControlledInputChange = (event) => {
+const HandleControlledInputChangeUser = (event) => {
     const newUser = {...user}
     newUser[event.target.name] = event.target.value
-    updateUser(newUser)
+    setUser(newUser)
 }
-
+const HandleControlledInputChangeCustomer = (url) => {
+    const newCustomer = {...customer}
+    newCustomer.profile_picture = url
+    setCustomer(newCustomer)
+}
 function handleOnUpload(error, result, widget) {
     if ( error ) {
       updateError(error);
@@ -49,10 +67,7 @@ function handleOnUpload(error, result, widget) {
   useEffect(
     () => {
         if(url !== ""){
-            const copy = {...user}
-            copy.profilePicture = url
-            updateUser(copy)
-           
+            HandleControlledInputChangeCustomer(url)
             
             }
 
@@ -63,14 +78,18 @@ function handleOnUpload(error, result, widget) {
 const HandleSaveButton = () => {
     setIsLoading(true)
     if(rabbitUserObject) {
-        updateCustomer({
-            id: user.id,
-            fullName: user.fullName,
+        updateUser(user.id,{
+            
+            first_name: user.first_name,
+            last_name:user.last_name,
+            username: user.username,
             email: user.email,
             password: user.password,
-            profilePicture: url,
             isStaff: false
     
+        })
+        updateCustomer(user.id,{
+            profile_picture: url
         })
         .then(()=> navigate(`/social`))
     }
@@ -86,31 +105,44 @@ return(<>
         <form className="text-center md:w-1/2 h-auto mx-auto my-10 border-black border-2 p-10 ">
             <h2 className="text-center text-2xl text-secondary font-semibold">Update your profile</h2>
 <fieldset className=" p-4 mx-auto flex row">
-                <label className= "mx-auto" htmlFor="fullName">Name</label>
-                    <input onChange={HandleControlledInputChange}
+                <label className= "mx-auto" htmlFor="fullName">First Name</label>
+                    <input onChange={HandleControlledInputChangeUser}
                            type="text" id="fullName" className="form-control input input-bordered input-md"
-                           defaultValue={user.fullName} name="fullName" required autoFocus />
-                          
-                          
+                           value={user.first_name} name="first_name" required autoFocus />
+                        
+                </fieldset>
+                <fieldset className=" p-4 mx-auto flex row">
+                <label className= "mx-auto" htmlFor="fullName">Last Name</label>
+                    <input onChange={HandleControlledInputChangeUser}
+                           type="text" id="fullName" className="form-control input input-bordered input-md"
+                           value={user.last_name} name="last_name" required autoFocus />
+                        
+                </fieldset>
+                <fieldset className=" p-4 mx-auto flex row">
+                <label className= "mx-auto" htmlFor="fullName">Username</label>
+                    <input onChange={HandleControlledInputChangeUser}
+                           type="text" id="username" className="form-control input input-bordered input-md"
+                           value={user.username} name="username" required autoFocus />
+                        
                 </fieldset>
                 <fieldset className="p-4 mx-auto flex row">
                 <label className="mx-auto" htmlFor="inputEmail">Email</label>
-                    <input onChange={HandleControlledInputChange}
+                    <input onChange={HandleControlledInputChangeUser}
                         type="email" id="email" className="input input-bordered input-md"
-                        defaultValue={user.email} name="email" required />
+                        value={user.email} name="email" required />
                         
                 </fieldset>
                 <fieldset className="p-4 mx-auto flex row">
                 <label className="mx-auto" htmlFor="password">Password</label>
-                    <input onChange={HandleControlledInputChange}
-                        defaultValue={user.password}
+                    <input onChange={HandleControlledInputChangeUser}
+                        value={user.password}
                         type="text" id="password" className="input input-bordered input-md"
                         placeholder="new password" name="password"required />
                     
                 </fieldset>
 
                 <fieldset className="p-4 mx-auto flex row justify-evenly items-center">
-                {user.profilePicture && url === "" ? <img className="h-1/3 w-1/3" src={user.profilePicture}/>
+                {customer.profile_picture && url === "" ? <img className="h-1/3 w-1/3" src={customer.profile_picture}/>
                 :  <img className="h-1/3 w-1/3" src={url}/>}
                 
                 <UploadWidget onUpload={handleOnUpload}/>

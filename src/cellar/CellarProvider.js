@@ -15,6 +15,7 @@ export const getCustomers = () => {
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
             }}).then(response => response.json())}
+            
 export const getFavorites=()=>{
     return <></>
 }

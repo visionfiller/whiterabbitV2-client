@@ -89,7 +89,14 @@ DisplayPreview()
         event.preventDefault()
 if (newVarietalRegion.regionId && newVarietalRegion.varietalId && newVarietalRegion.bodyId && newVarietalRegion.acidityId && newVarietalRegion.drynessId) 
 {
-    createNewVarietalRegion(newVarietalRegion)
+    let newWine = {
+        varietal: newVarietalRegion.varietalId,
+        region: newVarietalRegion.regionId,
+        body: newVarietalRegion.bodyId,
+        acidity: newVarietalRegion.acidityId,
+        dryness: newVarietalRegion.drynessId
+    }
+    createNewVarietalRegion(newWine)
             .then(() => {
                 navigate("/somm")
             })

@@ -2,23 +2,24 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { getUserById } from "./NavProvider"
 import { Dropdown } from "flowbite-react"
+import { getCustomer } from "../cellar/CellarProvider"
 
-export const CustomerNav = (token, setToken, is_staff) => {
+export const CustomerNav = ({user, setToken, is_staff}) => {
   const navigate = useNavigate()
   const [foundUser, setFoundUser] = useState({})
   const [profilePicture, setProfilePicture] = useState("")
 
   useEffect(() => {
-    getUserById(token.user_id)
+    getCustomer(user.user_id)
     .then((data) => {
       setFoundUser(data)
     })
-  }, [token]
+  }, [user]
   )
 
   useEffect(() => {
-    if (foundUser.profilePicture) {
-      setProfilePicture(foundUser.profilePicture)
+    if (foundUser.profile_picture) {
+      setProfilePicture(foundUser.profile_picture)
     }
   }, [foundUser])
   return (<>
@@ -37,8 +38,7 @@ export const CustomerNav = (token, setToken, is_staff) => {
 
               <div className="absolute inset-0 h-24 w-24 rounded-full bg-secondary/80 px-12 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
                 <div className="flex min-h-full rounded-full flex-col items-center justify-center">
-                  <Link className="block  text-white font-semibold text-xl" aria-current="page" onClick={() => {localStorage.removeItem("rabbit_user")
-                navigate("/login", {replace: true})}}>Logout</Link>
+                  <Link className="block  text-white font-semibold text-xl" aria-current="page" onClick={() =>  {localStorage.removeItem("rabbit_user").then(()=>{navigate("/login") }) }}>Logout</Link>
                 </div>
               </div>
             </div>
@@ -97,8 +97,7 @@ export const CustomerNav = (token, setToken, is_staff) => {
           </Dropdown.Item>
           <Dropdown.Item>
             <Link onClick={() => {
-              setToken("");
-              navigate("/login");
+             localStorage.removeItem("rabbit_user").then(()=>{navigate("/login") }) 
             }} className="block py-2 pl-3 pr-4 text-secondary rounded " >Logout</Link>
           </Dropdown.Item>
         </Dropdown>

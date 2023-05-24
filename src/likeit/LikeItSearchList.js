@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getFavorites } from "../cellar/CellarProvider"
+import { getCustomer, getFavorites } from "../cellar/CellarProvider"
 import { CardDetails } from "../library/CardDetails"
 import { getVarietalRegions } from "../library/LibraryProvider"
 
@@ -19,9 +19,9 @@ export const LikeItSearchedList = ({ searchTermStateVarietal, searchTermStateReg
             .then((data) => {
                 setVarietalRegions(data)
             })
-        getFavorites(rabbitUserObject.id)
+        getCustomer(rabbitUserObject.user_id)
             .then((data) => {
-                setFavorites(data)
+                setFavorites(data.favorites)
             })
     }, []
     )
@@ -29,7 +29,7 @@ export const LikeItSearchedList = ({ searchTermStateVarietal, searchTermStateReg
     useEffect(() => {
         getVarietalRegions()
             .then((varietalRegionsArray) => {
-                let favoriteRegions = varietalRegionsArray.filter(region => favorites.find((favorite) => favorite.varietalRegionId === region.id))
+                let favoriteRegions = varietalRegionsArray.filter(region => favorites.find((favorite) => favorite.id === region.id))
                 setFiltered(favoriteRegions)
             })
     }, [favorites]
@@ -70,15 +70,15 @@ export const LikeItSearchedList = ({ searchTermStateVarietal, searchTermStateReg
     }
 
     const calculatePercentage = (foundWine) => {
-        let bodyRange = foundWine.bodyId + 1
-        let bodyRangeTwo = foundWine.bodyId - 1
-        let bodyArray = filteredVarietalRegions.filter(varietalRegion => (varietalRegion.bodyId === bodyRange) || (varietalRegion.bodyId === foundWine.bodyId) || (varietalRegion.bodyId === bodyRangeTwo))
+        let bodyRange = foundWine.body.id + 1
+        let bodyRangeTwo = foundWine.body.id - 1
+        let bodyArray = filteredVarietalRegions.filter(varietalRegion => (varietalRegion.body.id === bodyRange) || (varietalRegion.body.id === foundWine.body.id) || (varietalRegion.body.id === bodyRangeTwo))
 
-        let drynessUp = foundWine.drynessId + 1
-        let drynessDown = foundWine.drynessId - 1
-        let drynessArray = filteredVarietalRegions.filter(varietalRegion => varietalRegion.drynessId === foundWine.drynessId || varietalRegion.drynessId === drynessUp || varietalRegion.drynessId === drynessDown)
+        let drynessUp = foundWine.dryness.id + 1
+        let drynessDown = foundWine.dryness.id - 1
+        let drynessArray = filteredVarietalRegions.filter(varietalRegion => varietalRegion.dryness.id === foundWine.dryness.id || varietalRegion.dryness.id === drynessUp || varietalRegion.dryness.id === drynessDown)
 
-        let acidityArray = filteredVarietalRegions.filter(varietalRegion => varietalRegion.acidityId === foundWine.acidityId)
+        let acidityArray = filteredVarietalRegions.filter(varietalRegion => varietalRegion.acidity.id === foundWine.acidity.id)
 
         let bodyPercentage = bodyArray.length / filteredVarietalRegions.length
         let drynessPercentage = drynessArray.length / filteredVarietalRegions.length

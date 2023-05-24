@@ -16,7 +16,7 @@ export const VarietalForm = ({ HandleVarietalFormClose }) => {
 
     const HandleClickSaveVarietal = (event) => {
         event.preventDefault()
-        if (varietal.image && varietal.name && varietal.description && varietal.wineTypeId) {
+        if (varietal.image && varietal.name && varietal.description && varietal.wine_type) {
             createVarietal(varietal)
                 .then(() => {
                     HandleVarietalFormClose(event)
@@ -74,7 +74,7 @@ export const VarietalForm = ({ HandleVarietalFormClose }) => {
                                 className="block py-2.5 px-0 w-3/4 text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer"
                                 onChange={(evt) => {
                                     const copy = { ...varietal }
-                                    copy.wineTypeId = parseInt(evt.target.value)
+                                    copy.wine_type = parseInt(evt.target.value)
                                     setVarietal(copy)
                                 }}>
                                 <option value="0">Select</option>
