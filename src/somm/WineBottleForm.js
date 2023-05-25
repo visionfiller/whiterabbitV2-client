@@ -10,7 +10,6 @@ export const WineBottleForm = () => {
 
     useEffect(
         () => {
-            
             getVarietalRegions()
             .then((data) => {
                 let sortedVarietalRegions = data.sort((a, b) => (a.region.country > b.region.country ? 1 : (a === b ? 0 : -1)))

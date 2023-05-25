@@ -33,36 +33,37 @@ export const CardDetails = ({ wineDetails, HandleCardClose }) => {
                 .then((detail) => {
                     setWine(detail)
 })}
-    // useEffect(() => {
-    //         if (wine.regionId) {
-    //             Geocoding(wine?.region?.geoCodeCity).then((geoCode) => {
-    //                 let foundLat = geoCode?.hits[0]?.point?.lat.toFixed(2)
-    //                 let foundLng = geoCode?.hits[0]?.point?.lng.toFixed(2)
-    //                 setLat(foundLat)
-    //                 setLng(foundLng)
-    //                 setIsLoading(false)
-    //             })
-    //                 .then(() => MyMapComponent())
-    //         }
-    //     }, [wine]
-    // )
+    useEffect(() => {
+            if (wine.region) {
+                Geocoding(wine?.region?.geo_code_city).then((geoCode) => {
+                    let foundLat = geoCode?.hits[0]?.point?.lat.toFixed(2)
+                    let foundLng = geoCode?.hits[0]?.point?.lng.toFixed(2)
+                    setLat(foundLat)
+                    setLng(foundLng)
+                    setIsLoading(false)
+                })
+                    .then(() => MyMapComponent())
+            }
+        }, [wine]
+    )
 
-    // const MyMapComponent = () => {
-    //     return (<>
-    //         {isLoading ? ""
-    //             :
-    //             <MapContainer center={[lat, lng]} zoom={8} scrollWheelZoom={false}>
-    //                 <TileLayer
-    //                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    //                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    //                 />
-    //             </MapContainer>
-    //         }
-    //     </>)
+    const MyMapComponent = () => {
+        return (<>
+            {isLoading ? ""
+                :
+                <MapContainer center={[lat, lng]} zoom={8} scrollWheelZoom={false}>
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                </MapContainer>
+            }
+        </>)
+    }
     
     const IsFavorite = (wine) => {
         if (!wine.is_favorite){
-            return <button className="btn" onClick={()=> Favorite(wine.id).then(()=> handleWineDetail())}>Favorite</button>
+            return <button className="btn bg-yellow-200 text-gray-800" onClick={()=> Favorite(wine.id).then(()=> handleWineDetail())}>Favorite</button>
         }
         else{
             return <button className="btn" onClick={()=>  unFavorite(wine.id).then(()=> handleWineDetail())}>unFavorite</button>
@@ -101,12 +102,12 @@ export const CardDetails = ({ wineDetails, HandleCardClose }) => {
                         <p className="badge  bg-fifth ">{wine?.dryness?.level}</p>
                     </div>
                 </div>
-                {/* {/* <div className="w-3/4 md:p-8 md:m-8 md:w-1/2  my-auto">
+                 <div className="w-3/4 md:p-8 md:m-8 md:w-1/2  my-auto">
                     <div id="map" className="object-cover w-full md:p-2 md:w-1/2 ">
                         {isLoading ? ""
                             : MyMapComponent()}
-                    </div> */}
-                {/* </div> */} 
+                    </div>
+                 </div> 
                 <div className="hidden md:block text-right p-2">
                             <button className="text-right text-2xl font-semibold"onClick={HandleCardClose}>X</button>
                             </div>

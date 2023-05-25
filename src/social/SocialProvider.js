@@ -46,23 +46,28 @@ export const updateCustomer = (id, userObject) => {
     })
        
 }
-export const getMessagesById = (id) => {
-    return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/messages?receiverUserId=${id}`)
-        .then(response => response.json())
-}
+
 export const CreateNewMessage = (messageObject) => {
-    return fetch(` https://white-rabbit-api-k3hmh.ondigitalocean.app/messages`, {
+    let token = getToken()
+    return fetch(`http://localhost:8000/customers/${messageObject.receiver}/message`, {
         method: "POST",
         headers: {
+            "Authorization": `Token ${token}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(messageObject)
     })
-        .then(response => response.json())
+        
 }
-export const deleteMessage = (id) => {
-    return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/messages/${id}`, {
-        method: "DELETE"
+export const deleteMessage = (messageObject) => {
+    let token = getToken()
+    return fetch(`http://localhost:8000/customers/${messageObject.receiver}/deletemessage`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Token ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(messageObject)
     })
 
 }

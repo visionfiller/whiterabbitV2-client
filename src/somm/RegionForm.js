@@ -52,7 +52,7 @@ export const RegionForm = ({ HandleRegionFormClose }) => {
                             <input
                                 onChange={(evt) => {
                                     const copy = { ...region }
-                                    copy.geoCodeCity = evt.target.value
+                                    copy.geo_code_city = evt.target.value
                                     setRegion(copy)
                                 }}
                                 className="block py-2.5 px-0 w-1/2text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer"

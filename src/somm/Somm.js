@@ -23,7 +23,7 @@ export const Somm = () => {
         getCustomers().then((customerArray) => { setCustomers(customerArray) })
         // getWineBottles().then((data) => { setWineBottles(data) })
         // getVarietalRegions().then((data) => { setVarietalRegions(data) })
-        getMessagesById(rabbitUserObject.id).then((data) => { setMessages(data) })
+       
     }, []
     )
 
@@ -35,10 +35,10 @@ export const Somm = () => {
     const HandleMessageClose = () => {
         setMessageForm(false)
     }
-    // const HandleWineClick = (event) => {
-    //     event.preventDefault()
-    //     setWineButton(true)
-    // }
+    const HandleWineClick = (event) => {
+        event.preventDefault()
+        setWineButton(true)
+    }
     const HandleWineClose = () => {
         setWineButton(false)
     }
@@ -113,10 +113,10 @@ export const Somm = () => {
                     <img className="object-cover h-3/4 w-3/4 mx-auto" src="https://logodix.com/logo/447066.png" />
                     <div className="text-center p-4 font-semibold">Check messages ( {messages.length} )</div>
                 </Link>
-                {/* <Link onClick={(event) => HandleWineClick(event)} className="mt-8" to="">
+                <Link onClick={(event) => HandleWineClick(event)} className="mt-8" to="">
                     <img className="object-cover h-3/4 w-3/4 mx-auto " src="https://th.bing.com/th/id/R.db5809040703e9d5323ee0d78fcc7cdd?rik=dC1X4XBIPeA17Q&riu=http%3a%2f%2fgetdrawings.com%2fimages%2fbottle-of-wine-drawing-7.png&ehk=fqUGNoLeF%2f5bDoTf8At5yNTgwNZj6Uss0xfxU4%2bkgJI%3d&risl=&pid=ImgRaw&r=0" />
                     <div className="text-center p-4 font-semibold">See WR's wines</div>
-                </Link> */}
+                </Link>
             </div>
         </div>
     </>

@@ -33,7 +33,7 @@ export const CustomerNav = ({user, setToken, is_staff}) => {
           <div className="group h-24 w-24  [perspective:1000px]">
             <div className="relative h-full w-full rounded-full shadow transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
               <div className="absolute inset-0">
-                <img className="h-full w-full rounded-full object-cover " src={profilePicture} alt="user photo" />
+                <img className="h-full w-full rounded-full object-cover " src={foundUser.profile_picture} alt="" />
               </div>
 
               <div className="absolute inset-0 h-24 w-24 rounded-full bg-secondary/80 px-12 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">

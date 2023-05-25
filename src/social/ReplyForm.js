@@ -1,28 +1,29 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { getCustomer } from "../cellar/CellarProvider"
 import { getUserById } from "../nav/NavProvider"
 import { CreateNewMessage } from "./SocialProvider"
 
-export const ReplyForm = ({messageObject,closeButton}) => {
+export const ReplyForm = ({sender, closeButton}) => {
     const[isLoading, setIsLoading] = useState(true)
     const[foundUser, setFoundUser] = useState({})
     const localRabbitUser = localStorage.getItem("rabbit_user")
     const rabbitUserObject = JSON.parse(localRabbitUser)
     const [message, setMessage] = useState({
-        receiverUserId: messageObject.senderUserId,
-        senderUserId: rabbitUserObject.id,
-        timeStamp: new Date().toLocaleString()
+        body: "",
+        receiver: sender
+
     })
    
 const navigate = useNavigate()
 useEffect( () => {
-        getUserById(messageObject.senderUserId)
+        getCustomer(sender)
         .then((data) => {
             setFoundUser(data)
             setIsLoading(false)
           
         })
-    },[messageObject]
+    },[]
 )
 
 return(<>
@@ -32,7 +33,7 @@ return(<>
         <button type="button" className="text-right" onClick={(event) => closeButton(event)}>Close</button>
         </div>
    {isLoading ? ""
-       :  <h2 className="text-center text-2xl text-secondary font-semibold">Reply to {foundUser.fullName}</h2>
+       :  <h2 className="text-center text-2xl text-secondary font-semibold">Reply to {foundUser.full_name}</h2>
 }
  <div className="relative z-0 w-full mb-6 group p-8 m-8"> 
                 <input onChange={

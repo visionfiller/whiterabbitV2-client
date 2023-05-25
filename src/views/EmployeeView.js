@@ -24,12 +24,12 @@ export const EmployeeViews = (token, setToken, is_staff) => {
         <div className=" h-full w-full bg-cover opacity-5 -z-10 fixed  bg-blur-xl bg-[url('https://i.pinimg.com/originals/49/c3/06/49c306154adc0a4ae7f45b7a68dd4d69.jpg')] " ></div>
     <Routes>
     <Route path="/" element={ <Somm />} />
-       {/* <Route path="/home" element={ <Home />} />
+       <Route path="/home" element={ <Home />} />
        <Route path="/library/details/:varietalRegionId" element={ <CardDetails />} />
         <Route path="/library" element={ <Library/>} />
         <Route path="/chat" element={ <ChatWine/>} />
         <Route path="/library/edit/:varietalRegionId" element={ <EditVarietalRegion />} />
-        <Route path="/cellar" element={ <WineCellar />} /> */}
+        <Route path="/cellar" element={ <WineCellar />} />
         <Route path="/somm" element={ <Somm />} />
         <Route path="/somm/WineList" element={ <WineList/>} />
         <Route path="/sommMessages" element={ <Messages />} />
