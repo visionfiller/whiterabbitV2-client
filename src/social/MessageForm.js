@@ -7,9 +7,8 @@ export const MessageForm = ({closeButton,foundCustomer}) => {
     const localRabbitUser = localStorage.getItem("rabbit_user")
     const rabbitUserObject = JSON.parse(localRabbitUser)
     const [message, setMessage] = useState({
-        receiverUserId: foundCustomer.id,
-        senderUserId: rabbitUserObject.id,
-        timeStamp: new Date().toLocaleString()
+        receiver: foundCustomer.user,
+        
     })
 
     return(<>

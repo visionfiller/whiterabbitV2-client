@@ -51,14 +51,16 @@ export const getWineTypes = () => {
 
 
 export const updateVarietalRegion =(varietalRegionObject) => {
-    return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/varietalRegions/${varietalRegionObject.id}`, {
+    let token = getToken()
+    return fetch(`http://localhost:8000/varietalregions/${varietalRegionObject.id}`, {
         method: "PUT",
         headers: {
+        "Authorization": `Token ${token}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify(varietalRegionObject)
       })
-      .then(response => response.json())
+      
 }
 
 export const Geocoding = (city) => {

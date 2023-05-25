@@ -69,14 +69,14 @@ const getWines = () => {
                  )
         
             setFilteredWines(favorites)
-            console.log("hello")
+            
            
             }
         else if (showMyFavorites) { getCustomer(rabbitUserObject.user_id).then((data) => setFilteredWines(data.favorites))
         console.log('hello again')}
 
         else {setFilteredWines(varietalRegionsFiltered)
-        console.log('hello 3')}
+        }
         
        
     },

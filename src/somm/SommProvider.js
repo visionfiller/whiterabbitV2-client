@@ -114,9 +114,11 @@ export const createNewVarietalRegion = (wineObject) => {
         .then(response => response.json())
 }
 export const createRegion = (regionObject) => {
-    return fetch(` https://white-rabbit-api-k3hmh.ondigitalocean.app/regions`, {
+    let token = getToken()
+    return fetch(`http://localhost:8000/regions`, {
         method: "POST",
         headers: {
+            "Authorization": `Token ${token}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(regionObject)
@@ -124,16 +126,17 @@ export const createRegion = (regionObject) => {
         .then(response => response.json())
 }
 export const createVarietal = (varietalObject) => {
-    return fetch(` https://white-rabbit-api-k3hmh.ondigitalocean.app/varietals`, {
+    let token = getToken()
+    return fetch(`http://localhost:8000/varietals`, {
         method: "POST",
         headers: {
+            "Authorization": `Token ${token}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(varietalObject)
     })
         .then(response => response.json())
 }
-
 export const createWineBottle = (bottleObject) => {
     return fetch(` https://white-rabbit-api-k3hmh.ondigitalocean.app/wineBottles`, {
         method: "POST",

@@ -33,7 +33,7 @@ export const Recommendations = ({ user}) => {
 
     useEffect(()=>{
         if(user.favorites){
-        let array = varietalRegions.filter((region) => user.favorites.find((favorite => favorite.dryness.id === region.dryness.id)))
+        let array = varietalRegions.filter((region) => user.favorites.find((favorite => favorite.dryness.id === region.dryness.id || favorite.body.id === region.body.id || favorite.acidity.id === region.acidity.id)))
         let newArray = array.filter(wine => user.favorites.every(favorite => favorite.id !== wine.id))
         console.log(array)
         setNewArray(newArray)
