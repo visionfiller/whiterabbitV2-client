@@ -5,43 +5,21 @@ import { getVarietalRegions } from "../library/LibraryProvider"
 import { getFavorites, getMatchedWineBottlesbyVarietalRegionId } from "./CellarProvider"
 
 
-export const MatchedWineBottles = ({rabbitUserObject}) => {
+export const MatchedWineBottles = ({favorites, rabbitUserObject}) => {
     const [wineBottles, setWineBottles] = useState([])
-    const [favorites, setFavorites] = useState([])
     const [varietalRegions, setVarietalRegions] = useState ([])
-    // useEffect(
-    //     ()=> {
-    //         getFavorites(rabbitUserObject.id)
-    //         .then((data)=> {
-    //             setFavorites(data)
-    //         })
-    //     },[]
-      
-    // //   )
-    //   useEffect(
-    //     () => {
-    //         getVarietalRegions()
-    //         .then((varietalRegionsArray) => {
-    //             let favoriteRegions = varietalRegionsArray.filter(region => favorites.find((favorite) => favorite.varietalRegionId === region.id))
-    //             setVarietalRegions(favoriteRegions)
-    //         }
-    //         )
-          
-    //     },[favorites]
-    //   )
-     
 
 useEffect(
     () => {
         let array =[]
-        varietalRegions.map((varietalRegion) => {
+        favorites?.map((varietalRegion) => {
             array.push(getMatchedWineBottlesbyVarietalRegionId(varietalRegion.id))
         })
         Promise.all(array)
         .then((data) =>
         setWineBottles(data)
         )
-    },[varietalRegions]
+    },[favorites]
 
 )
  const openInNewTab = (url) => {

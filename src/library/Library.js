@@ -8,7 +8,7 @@ export const Library = () => {
     const [filteredWines, setFilteredWines] = useState([])
     const [wineTypeId, setWineTypeId] = useState("")
     const [wineTypes, setWineTypes] = useState([])
-    // const [sorted, setSorted] = useState("")
+    const [sorted, setSorted] = useState("")
     // const [loading, setLoading] = useState(false);
     // const [hasMore, setHasMore] = useState(true);
     // const [curPage, setCurPage] = useState(1);
@@ -58,9 +58,12 @@ const getWines = () => {
     useEffect(() => {
         let varietalRegionsFiltered = [...varietalRegions]
         if (wineTypeId) { getVarietalRegionsByWineType(wineTypeId).then((data)=>setFilteredWines(data)) }
-        // if (sorted === "body") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => b.bodyId - a.bodyId) }
-        // if (sorted === "acidity") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => a.acidityId - b.acidityId) }
-        // if (sorted === "dryness") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => a.drynessId - b.drynessId) }
+        if (sorted === "body") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => b.body.id - a.body.id)
+                                    setFilteredWines(varietalRegionsFiltered) }
+        if (sorted === "acidity") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => a.acidity.id - b.acidity.id) 
+                                    setFilteredWines(varietalRegionsFiltered) }
+        if (sorted === "dryness") { varietalRegionsFiltered = varietalRegionsFiltered.sort((a, b) => a.dryness.id - b.dryness.id) 
+                                    setFilteredWines(varietalRegionsFiltered)}
        
         else if (showFavorites && customers.length){
             let favorites= []
@@ -80,7 +83,7 @@ const getWines = () => {
         
        
     },
-        [varietalRegions, wineTypeId, showMyFavorites, showFavorites, customers.length]
+        [varietalRegions, wineTypeId, showMyFavorites, showFavorites, customers.length, sorted]
     )
    
 
@@ -116,7 +119,7 @@ const getWines = () => {
                     })}
                 </select>
             </div>
-            {/* <div id="sortFilters" className="m-2">
+            <div id="sortFilters" className="m-2">
 
                 <select
                     className="text-black rounded-lg"
@@ -126,7 +129,7 @@ const getWines = () => {
                     <option key="acidity" id="Acidity" value="acidity">Acidity</option>
                     <option key="dryness" id="Dryness" value="dryness">Dryness</option>
                 </select>
-            </div> */}
+            </div>
             {rabbitUserObject.is_staff ? ""
             : <div className="flex row gap-5 items-center">
             <div id="favorites" className="flex row gap-2 p-1">

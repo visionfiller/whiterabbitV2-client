@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { UploadWidget } from "../cloudinary/UploadWidget"
 import { createUser, getUserByEmailId } from "./UserProvider"
 
-export const Register = (setToken) => {
+export const Register = ({setToken}) => {
     const [user, setUser] = useState({ is_staff: false })
     const [url, setURL] = useState("")
     const [error, updateError] = useState("")
@@ -22,7 +22,7 @@ export const Register = (setToken) => {
         }).then(res => {
             if ("valid" in res && res.valid) {
               setToken(res.auth_token, res.user_id, res.is_staff)
-              navigate("/")
+              
             }
           })
            
@@ -50,17 +50,9 @@ export const Register = (setToken) => {
 
     const handleRegister = (e) => {
         e.preventDefault()
-        return getUserByEmailId(user)
-            .then(response => {
-                if (response.length > 0) {
-                    // Duplicate email. No good.
-                    window.alert("Account with that email address already exists")
-                }
-                else {
-                    // Good email, create user.
-                    registerNewUser()
-                }
-            })
+        registerNewUser().then(()=> navigate("/"))
+                
+            
     }
 
     const updateUser = (evt) => {

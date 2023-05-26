@@ -48,8 +48,12 @@ export const Favorite = (id) => {
        
 }
 export const getMatchedWineBottlesbyVarietalRegionId = (id) => {
-    return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/wineBottles?varietalRegionId=${id}`) 
-    .then(response => response.json())
+    let token = getToken()
+    return fetch(`http://localhost:8000/winebottles?varietal_region=${id}`, {
+        headers:{
+            "Authorization": `Token ${token}`,
+             "Content-Type": "application/json"
+        }}).then(response => response.json())
 }
 
 

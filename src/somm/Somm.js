@@ -21,8 +21,8 @@ export const Somm = () => {
 
     useEffect(() => {
         getCustomers().then((customerArray) => { setCustomers(customerArray) })
-        // getWineBottles().then((data) => { setWineBottles(data) })
-        // getVarietalRegions().then((data) => { setVarietalRegions(data) })
+        getWineBottles().then((data) => { setWineBottles(data) })
+        getVarietalRegions().then((data) => { setVarietalRegions(data) })
        
     }, []
     )
@@ -43,18 +43,18 @@ export const Somm = () => {
         setWineButton(false)
     }
 
-    // const findVarietal = (bottle) => {
-    //     let foundVarietal = varietalRegions.find(varietalRegion => varietalRegion.id === bottle.varietalRegionId)
-    //     return (
-    //         <div>{foundVarietal.varietal?.name}</div>
-    //     )
-    // }
-    // const findRegion = (bottle) => {
-    //     let foundRegion = varietalRegions.find(varietalRegion => varietalRegion.id === bottle.varietalRegionId)
-    //     return (
-    //         <div>{foundRegion.region?.location}, {foundRegion.region?.country}</div>
-    //     )
-    // }
+    const findVarietal = (bottle) => {
+        let foundVarietal = varietalRegions.find(varietalRegion => varietalRegion.id === bottle.varietal_region.id)
+        return (
+            <div>{foundVarietal.varietal?.name}</div>
+        )
+    }
+    const findRegion = (bottle) => {
+        let foundRegion = varietalRegions.find(varietalRegion => varietalRegion.id === bottle.varietal_region.id)
+        return (
+            <div>{foundRegion.region?.location}, {foundRegion.region?.country}</div>
+        )
+    }
 
     const openInNewTab = (url) => {
         const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
@@ -98,8 +98,8 @@ export const Somm = () => {
                     </div>
                 </div>
             </div>
-            {/* {wineButton ? <WineList varietalRegions={varietalRegions} wineBottles={wineBottles} findRegion={findRegion} findVarietal={findVarietal} openInNewTab={openInNewTab} HandleWineClose={HandleWineClose} />
-                : ""} */}
+            {wineButton ? <WineList varietalRegions={varietalRegions} wineBottles={wineBottles} findRegion={findRegion} findVarietal={findVarietal} openInNewTab={openInNewTab} HandleWineClose={HandleWineClose} />
+                : ""}
             <div className="md:grid md:grid-cols-2 md:p-16 md:pr-0">
                 <Link className="md:border-b-2 md:border-r-2 border-secondary" to="/somm/createVarietalRegion">
                     <img className=" w-3/4 h-3/4 mx-auto" src="https://th.bing.com/th/id/R.9bacebdd9ed8ea8b3f3b8fe496bbec67?rik=xYCoMrSb3nMLDA&riu=http%3a%2f%2fwww.clker.com%2fcliparts%2f4%2f2%2f1%2fe%2f1197104269542805265PanamaG_French_outline.svg.hi.png&ehk=87yZWE1OvqaEcmAJT4KRka80DBEBxrsZsvF8joayECc%3d&risl=&pid=ImgRaw&r=0" />

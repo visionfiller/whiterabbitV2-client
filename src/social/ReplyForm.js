@@ -4,7 +4,7 @@ import { getCustomer } from "../cellar/CellarProvider"
 import { getUserById } from "../nav/NavProvider"
 import { CreateNewMessage } from "./SocialProvider"
 
-export const ReplyForm = ({sender, closeButton}) => {
+export const ReplyForm = ({findSender, sender, oldmessage, closeButton}) => {
     const[isLoading, setIsLoading] = useState(true)
     const[foundUser, setFoundUser] = useState({})
     const localRabbitUser = localStorage.getItem("rabbit_user")
@@ -33,7 +33,7 @@ return(<>
         <button type="button" className="text-right" onClick={(event) => closeButton(event)}>Close</button>
         </div>
    {isLoading ? ""
-       :  <h2 className="text-center text-2xl text-secondary font-semibold">Reply to {foundUser.full_name}</h2>
+       : findSender(message)
 }
  <div className="relative z-0 w-full mb-6 group p-8 m-8"> 
                 <input onChange={

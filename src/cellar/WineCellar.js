@@ -2,34 +2,9 @@ import { useEffect, useState } from "react"
 import { getVarietalRegions } from "../library/LibraryProvider"
 import { deleteFavorite, getFavorites, unFavorite } from "./CellarProvider"
 
-export const WineCellar =({ rabbitUserObject, favorites}) => {
-const [varietalRegions, setVarietalRegions] = useState([])
-// const [favorites, setFavorites] = useState([])
-
-// useEffect(
-//   ()=> {
-//       getFavorites(rabbitUserObject.id)
-//       .then((data)=> {
-//           setFavorites(data)
-//       })
-//   },[]
-
-// )
-// useEffect(
-//   () => {
-//       getVarietalRegions()
-//       .then((varietalRegionsArray) => {
-//           let favoriteRegions = varietalRegionsArray.filter(region => favorites.find((favorite) => favorite.varietalRegionId === region.id))
-//           setVarietalRegions(favoriteRegions)
-//       }
-//       )
-    
-//   },[favorites]
-// )
-
-
+export const WineCellar =({ getCustomerFavorites, rabbitUserObject, favorites}) => {
 const handleDelete = (id) => {
-  unFavorite(id)
+  unFavorite(id).then(()=> getCustomerFavorites())
 }
  
  

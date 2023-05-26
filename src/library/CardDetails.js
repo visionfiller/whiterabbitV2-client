@@ -1,30 +1,21 @@
 import { useEffect, useState } from "react"
 import { MapContainer, TileLayer } from 'react-leaflet'
-import { useNavigate, useParams } from "react-router-dom"
-import { Favorite, getCustomer, getFavorites, unFavorite } from "../cellar/CellarProvider"
-import { addToFavorites, Geocoding, getVarietalRegionsById } from "./LibraryProvider"
+import { Favorite, unFavorite } from "../cellar/CellarProvider"
+import {  deleteVarietalRegion, Geocoding, getVarietalRegionsById } from "./LibraryProvider"
 
-export const CardDetails = ({ wineDetails, HandleCardClose }) => {
-    const [favorites, setFavorites] = useState([])
+export const CardDetails = ({getWines, wineDetails, HandleCardClose }) => {
+   
     const [isLoading, setIsLoading] = useState(true)
     const [wine, setWine] = useState({})
     const localRabbitUser = localStorage.getItem("rabbit_user")
     const rabbitUserObject = JSON.parse(localRabbitUser)
     const [lat, setLat] = useState("")
     const [lng, setLng] = useState("")
-    const wineObject = {
-        userId: rabbitUserObject.id,
-        varietalRegionId: wine.id
-    }
-    const [customer,setCustomer] = useState({})
+    
 
     useEffect(() => {
             handleWineDetail()
             
-            // getFavorites(rabbitUserObject.id)
-            //     .then((data) => {
-            //         setFavorites(data)
-            //     })
         }, []
     )
 
@@ -90,7 +81,7 @@ export const CardDetails = ({ wineDetails, HandleCardClose }) => {
                         
                   <div className="mx-auto p-2">
                     <button onClick={() => openInNewTab(FindWineByName(wine.varietal.name))} className="mr-5 bg-red-700 btn btn-sm text-white">Find on Drizzly</button>
-                    {rabbitUserObject.is_staff ? ""
+                    {rabbitUserObject.is_staff ? <button onClick={()=> deleteVarietalRegion(wine.id).then(()=> getWines())}className="btn btn-sm">Delete from Library</button>
                         : IsFavorite(wine)}
                     </div>
                     <h2 className="text-xl font-bold text-secondary">{wine?.region?.location} {wine.varietal?.name}</h2>
