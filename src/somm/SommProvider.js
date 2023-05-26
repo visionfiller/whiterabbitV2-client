@@ -138,17 +138,24 @@ export const createVarietal = (varietalObject) => {
         .then(response => response.json())
 }
 export const createWineBottle = (bottleObject) => {
-    return fetch(` https://white-rabbit-api-k3hmh.ondigitalocean.app/wineBottles`, {
+    let token = getToken()
+    return fetch(`http://localhost:8000/winebottles`, {
         method: "POST",
         headers: {
+            "Authorization": `Token ${token}`,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(bottleObject)
     })
         .then(response => response.json())
 }
-
 export const getWineBottles = () => {
-    return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/wineBottles`)
-    .then(response => response.json())
+    let token = getToken()
+    return fetch("http://localhost:8000/winebottles", {
+        headers:{
+            "Authorization": `Token ${token}`,
+             "Content-Type": "application/json"
+        }
+    })
+        .then(response => response.json())
 }

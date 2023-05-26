@@ -4,7 +4,13 @@ import { getVarietalRegions } from "../library/LibraryProvider"
 import { createWineBottle } from "./SommProvider"
 
 export const WineBottleForm = () => {
-    const [wineBottle, setWineBottle] = useState({})
+    const [wineBottle, setWineBottle] = useState({
+        name: "",
+        vintage: 0,
+        link: "",
+        image: "",
+        varietal_region: 0
+    })
     const [varietalRegions, setVarietalRegions] = useState([])
     const navigate = useNavigate()
 
@@ -20,7 +26,7 @@ export const WineBottleForm = () => {
 
     const HandleClickSaveWineBottle =(event) => {
         event.preventDefault()
-    if(wineBottle.name && wineBottle.vintage && wineBottle.varietalRegionId && wineBottle.image && wineBottle.link) {
+    if(wineBottle.name && wineBottle.vintage && wineBottle.varietal_region && wineBottle.image && wineBottle.link) {
         createWineBottle(wineBottle)
         .then(() => {
             navigate("/somm")
@@ -92,15 +98,15 @@ export const WineBottleForm = () => {
         <label>What type of wine?</label>
             <select
                     className="block py-2.5 px-0 w-1/2 text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                        id="varietalRegion"
+                        name="varietal_region"
                         onChange={
                             (evt) => {
                                 const copy = { ...wineBottle }
-                                copy.varietalRegionId = parseInt(evt.target.value)
+                                copy.varietal_region = parseInt(evt.target.value)
                                 setWineBottle(copy)
                             }}>
 
-                        <option name="varietalRegionId"> Choose Varietal Region...</option>
+                        <option name="varietal_region"> Choose Varietal Region...</option>
                         {varietalRegions.map(
                             (varietalRegion) => {
                                 return (<option key={varietalRegion.id}

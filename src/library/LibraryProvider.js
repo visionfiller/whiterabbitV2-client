@@ -60,7 +60,19 @@ export const updateVarietalRegion =(varietalRegionObject) => {
         },
         body: JSON.stringify(varietalRegionObject)
       })
-      
+}
+
+export const deleteVarietalRegion = (id) => {
+    let token = getToken()
+    return fetch(`http://localhost:8000/varietalregions/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Token ${token}`,
+            "Content-Type": "application/json"
+        }
+       
+    })
+
 }
 
 export const Geocoding = (city) => {

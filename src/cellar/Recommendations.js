@@ -4,7 +4,7 @@ import { getVarietalRegions } from "../library/LibraryProvider"
 import { getCustomer } from "./CellarProvider"
 
 
-export const Recommendations = ({ user}) => {
+export const Recommendations = ({ favorites, user}) => {
     const [varietalRegions, setVarietalRegions] = useState([])
    
     const [cardDetails, setCardDetails] = useState(false)
@@ -32,13 +32,13 @@ export const Recommendations = ({ user}) => {
 
 
     useEffect(()=>{
-        if(user.favorites){
+        if(favorites){
         let array = varietalRegions.filter((region) => user.favorites.find((favorite => favorite.dryness.id === region.dryness.id || favorite.body.id === region.body.id || favorite.acidity.id === region.acidity.id)))
         let newArray = array.filter(wine => user.favorites.every(favorite => favorite.id !== wine.id))
-        console.log(array)
+    
         setNewArray(newArray)
         }
-    },[user])
+    },[favorites,varietalRegions])
     
    
 
@@ -50,7 +50,7 @@ export const Recommendations = ({ user}) => {
             <div className="flex  w-full p-10 justify-evenly">
                 <div className="w-full md:w-1/2 flex flex-col  flex-wrap  ">
                     {newArray.length ?
-                        newArray.map((wine) => {
+                        newArray?.map((wine) => {
                             return (<div className="" key={wine.id}>
                                 <button onClick={(event) => HandleCardClick(event, wine)} key={wine.id} id={wine.id} className="badge badge-sm  bg-transparent border-none  font-semibold p-8 my-8 w-full transform hover:scale-125  transition ease-out duration-300">
                                     {wine.varietal.wine_type === 2 ? <><div className="bg-transparent inline-block  absolute  mx-auto text-lg md:text-xl text-secondary">{wine.region?.location} {wine.varietal?.name}</div><img src="https://www.onlygfx.com/wp-content/uploads/2017/04/yellow-paint-brush-stroke-9-300x122.png" className="w-full md:w-full" /></>
@@ -61,7 +61,7 @@ export const Recommendations = ({ user}) => {
                                     : ""}
                             </div>)
                         })
-                        : <div className=" text-secondary font-semibold ">Add some favorites to see our recommendations!</div>}
+                       : <div>Add some wines to see some recommendations!</div> }
                 </div>
             </div>
         </div>

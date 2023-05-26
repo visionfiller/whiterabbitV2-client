@@ -56,7 +56,7 @@ export const LibraryCard = ({ wine, getWines }) => {
                     <div>{wine?.region?.location} {wine.varietal?.name}</div>
                     <div className="text-sm ">Country: {wine?.region?.country}</div>
                 </div>
-                {cardDetails ? <CardDetails wineDetails={wine} HandleCardClose={HandleCardClose} />
+                {cardDetails ? <CardDetails getWines={getWines} wineDetails={wine} HandleCardClose={HandleCardClose} />
                     : ""}
             </div>
         </div>
