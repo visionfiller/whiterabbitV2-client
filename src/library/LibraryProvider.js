@@ -2,7 +2,7 @@ import { getToken } from "../TokenManager"
 
 export const getVarietalRegions = () => {
     let token = getToken()
-    return fetch("http://localhost:8000/varietalregions", {
+    return fetch("https://whiterabbit-server.herokuapp.com/varietalregions", {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -12,7 +12,7 @@ export const getVarietalRegions = () => {
 }
 export const getVarietalRegionsById = (id) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/varietalregions/${id}`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/varietalregions/${id}`, {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -22,7 +22,7 @@ export const getVarietalRegionsById = (id) => {
 }
 export const getVarietalRegionsByWineType = (wineTypeId) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/varietalregions?wine_type=${wineTypeId}`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/varietalregions?wine_type=${wineTypeId}`, {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -30,17 +30,17 @@ export const getVarietalRegionsByWineType = (wineTypeId) => {
     })
         .then(response => response.json())
 }
-export const getAllFavorites = () => {
-    return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/favorites`)
-    .then(response => response.json())
-}
-export const getVarietalRegionsToPaginate = (currentPage) => {
-    return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/varietalRegions?_page=${currentPage}&_limit=20_expand=dryness&_expand=body&_expand=acidity&_expand=varietal&_expand=region`)
-    .then(response => response.json())
-}
+// export const getAllFavorites = () => {
+//     return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/favorites`)
+//     .then(response => response.json())
+// }
+// export const getVarietalRegionsToPaginate = (currentPage) => {
+//     return fetch(`https://white-rabbit-api-k3hmh.ondigitalocean.app/varietalRegions?_page=${currentPage}&_limit=20_expand=dryness&_expand=body&_expand=acidity&_expand=varietal&_expand=region`)
+//     .then(response => response.json())
+// }
 export const getWineTypes = () => {
     let token = getToken()
-    return fetch("http://localhost:8000/winetypes", {
+    return fetch("https://whiterabbit-server.herokuapp.com/winetypes", {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -52,7 +52,7 @@ export const getWineTypes = () => {
 
 export const updateVarietalRegion =(varietalRegionObject) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/varietalregions/${varietalRegionObject.id}`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/varietalregions/${varietalRegionObject.id}`, {
         method: "PUT",
         headers: {
         "Authorization": `Token ${token}`,
@@ -64,7 +64,7 @@ export const updateVarietalRegion =(varietalRegionObject) => {
 
 export const deleteVarietalRegion = (id) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/varietalregions/${id}`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/varietalregions/${id}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Token ${token}`,

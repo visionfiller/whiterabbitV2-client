@@ -2,7 +2,7 @@ import { getToken } from "../TokenManager"
 
 export const getCustomer = (id) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/customers/${id}`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/customers/${id}`, {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -10,7 +10,7 @@ export const getCustomer = (id) => {
     }
 export const getCustomers = () => {
     let token = getToken()
-    return fetch(`http://localhost:8000/customers`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/customers`, {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -23,7 +23,7 @@ export const getFavorites=()=>{
 
 export const unFavorite = (id) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/varietalregions/${id}/unfavorite`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/varietalregions/${id}/unfavorite`, {
         method: "DELETE",
         headers:{
             "Authorization": `Token ${token}`,
@@ -36,7 +36,7 @@ export const unFavorite = (id) => {
 }
 export const Favorite = (id) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/varietalregions/${id}/favorite`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/varietalregions/${id}/favorite`, {
         method: "POST",
         headers:{
             "Authorization": `Token ${token}`,
@@ -49,7 +49,7 @@ export const Favorite = (id) => {
 }
 export const getMatchedWineBottlesbyVarietalRegionId = (id) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/winebottles?varietal_region=${id}`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/winebottles?varietal_region=${id}`, {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
