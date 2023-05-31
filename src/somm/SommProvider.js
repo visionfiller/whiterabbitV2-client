@@ -2,7 +2,7 @@ import { getToken } from "../TokenManager"
 
 export const getRegions = () => {
     let token = getToken()
-    return fetch("http://localhost:8000/regions", {
+    return fetch("https://whiterabbit-server.herokuapp.com/regions", {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -12,7 +12,7 @@ export const getRegions = () => {
 }
 export const getRegionsById = (id) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/regions/${id}`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/regions/${id}`, {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -22,7 +22,7 @@ export const getRegionsById = (id) => {
 }
 export const getVarietals = () => {
     let token = getToken()
-    return fetch("http://localhost:8000/varietals", {
+    return fetch("https://whiterabbit-server.herokuapp.com/varietals", {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -32,7 +32,7 @@ export const getVarietals = () => {
 }
 export const getVarietalById = (id) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/varietals/${id}`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/varietals/${id}`, {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -42,7 +42,7 @@ export const getVarietalById = (id) => {
 }
 export const getBodies = () => {
     let token = getToken()
-    return fetch("http://localhost:8000/bodies", {
+    return fetch("https://whiterabbit-server.herokuapp.com/bodies", {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -52,7 +52,7 @@ export const getBodies = () => {
 }
 export const getBodiesById = (id) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/bodies/${id}`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/bodies/${id}`, {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -62,7 +62,7 @@ export const getBodiesById = (id) => {
 }
 export const getAcidities = () => {
     let token = getToken()
-    return fetch("http://localhost:8000/acidities", {
+    return fetch("https://whiterabbit-server.herokuapp.com/acidities", {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -72,7 +72,7 @@ export const getAcidities = () => {
 }
 export const getAcidityById = (id) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/acidities/${id}`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/acidities/${id}`, {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -82,7 +82,7 @@ export const getAcidityById = (id) => {
 }
 export const getDrynesses = () => {
     let token = getToken()
-    return fetch("http://localhost:8000/drynesses", {
+    return fetch("https://whiterabbit-server.herokuapp.com/drynesses", {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -92,7 +92,7 @@ export const getDrynesses = () => {
 }
 export const getDrynessById = (id) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/drynesses/${id}`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/drynesses/${id}`, {
         headers:{
             "Authorization": `Token ${token}`,
              "Content-Type": "application/json"
@@ -103,7 +103,7 @@ export const getDrynessById = (id) => {
 
 export const createNewVarietalRegion = (wineObject) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/varietalregions`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/varietalregions`, {
         method: "POST",
         headers: {
             "Authorization": `Token ${token}`,
@@ -115,7 +115,7 @@ export const createNewVarietalRegion = (wineObject) => {
 }
 export const createRegion = (regionObject) => {
     let token = getToken()
-    return fetch(`http://localhost:8000/regions`, {
+    return fetch(`https://whiterabbit-server.herokuapp.com/regions`, {
         method: "POST",
         headers: {
             "Authorization": `Token ${token}`,
